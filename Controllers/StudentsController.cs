@@ -8,19 +8,19 @@ public class StudentsController : ControllerBase
 {
     private readonly ILogger<StudentsController> _logger;
 
-    private ISqlLiteProvider _sqlLiteProvider {get; set; }
+    private IStudentBL _studentBL {get; set; }
 
     public StudentsController(ILogger<StudentsController> logger,
-    ISqlLiteProvider sqlLiteProvider)
+    IStudentBL studentBL)
     {
         _logger = logger;
-        _sqlLiteProvider = sqlLiteProvider;
+        _studentBL = studentBL;
     }
 
     [HttpGet(Name = "GetAllStudents")]
     public IEnumerable<Student> GetAllStudents()
     {
-        List<Student?> list = new SqlLiteConnector().GetAllStudents().ToList();
+        List<Student?> list = _studentBL.GetAllStudents().ToList();
         return list;
     }
 
@@ -28,7 +28,7 @@ public class StudentsController : ControllerBase
     [HttpGet("{id}")]
     public ActionResult<Student> GetStudentById(int id)
     {
-        var student = new SqlLiteConnector().GetStudentById(id);
+        var student = _studentBL.GetStudentById(id);
 
         if (student == null)
         {
@@ -42,13 +42,13 @@ public class StudentsController : ControllerBase
     public IActionResult UpdateStudent([FromBody] Student Student)
     {
 
-        var studentExists = new SqlLiteConnector().GetStudentById(Student.Id);
+        var studentExists = _studentBL.GetStudentById(Student.Id);
 
         if(studentExists == null){
             return NotFound("El estudiante no Existe");
         }
 
-        var existingStudent = new SqlLiteConnector().UpdateStudent(Student);
+        var existingStudent = _studentBL.UpdateStudent(Student);
 
         if (existingStudent == false)
         {
@@ -62,13 +62,13 @@ public class StudentsController : ControllerBase
     public IActionResult DeleteStudent(int id)
     {
 
-        var studentExists = new SqlLiteConnector().GetStudentById(id);
+        var studentExists = _studentBL.GetStudentById(id);
 
         if(studentExists == null){
             return NotFound("El estudiante no Existe");
         }
 
-        var student = new SqlLiteConnector().DeleteStudentById(id);
+        var student = _studentBL.DeleteStudentById(id);
 
         if (student == false)
         {
@@ -82,12 +82,12 @@ public class StudentsController : ControllerBase
     public ActionResult<Student> CreateStudent([FromBody] Student student)
     {
 
-        var studentExists = new SqlLiteConnector().GetStudentById(student.Id);
+        var studentExists = _studentBL.GetStudentById(student.Id);
 
         if(studentExists != null){
             return Conflict("El estudiante ya existe.");
         }
-        var response = new SqlLiteConnector().InsertStudent(student);
+        var response = _studentBL.InsertStudent(student);
 
 
         if (response == false)

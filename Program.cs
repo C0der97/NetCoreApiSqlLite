@@ -23,6 +23,7 @@ builder.Services.AddLogging(logging =>
 
 
 builder.Services.AddSingleton<ISqlLiteProvider, SqlLiteProvider>();
+builder.Services.AddSingleton<IStudentBL, StudentBL>();
 
 var app = builder.Build();
 
