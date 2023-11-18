@@ -1,16 +1,15 @@
 using Microsoft.Data.Sqlite;
 
-public class SqlLiteProvider : ISqlLiteProvider
+namespace StudentApi.DataAccess
 {
-
-    private readonly IConfiguration _config;
-    public SqlLiteProvider(IConfiguration config)
+    public class SqlLiteProvider(IConfiguration config) : ISqlLiteProvider
     {
-      _config = config;
-    }
 
-    public SqliteConnection GetConnection()
-    {
-      return new SqliteConnection($"Data Source={_config["DatabaseName"]}.db");
+        private readonly IConfiguration _config = config;
+
+        public SqliteConnection GetConnection()
+        {
+            return new SqliteConnection($"Data Source={_config["DatabaseName"]}.db");
+        }
     }
 }

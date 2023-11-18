@@ -1,3 +1,6 @@
+using StudentApi.Bussiness;
+using StudentApi.DataAccess;
+
 var builder = WebApplication.CreateBuilder(args);
 
 
