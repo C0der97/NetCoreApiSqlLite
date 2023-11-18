@@ -24,7 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\NetCoreApiSqlLite\StudentApi.csproj" />
+    <ProjectReference Include="..\StudentsApi\StudentApi.csproj" />
   </ItemGroup>
 
 </Project>
