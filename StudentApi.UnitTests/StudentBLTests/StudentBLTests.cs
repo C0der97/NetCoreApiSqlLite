@@ -17,7 +17,7 @@ namespace StudentsApi.UnitTests.StudentBLTests
         {
             // Arrange
             _providerMock = new Mock<ISqlLiteProvider>();
-            _connectionLite = new SqliteConnection("Data Source=StudentsLite.db");
+            _connectionLite = new SqliteConnection("Data Source=:memory:");
             _providerMock.Setup(provider => provider.GetConnection()).Returns(_connectionLite);
             DeleteTableStudents();
             _studentBL = new StudentBL(_providerMock.Object);
