@@ -15,7 +15,7 @@ public class Student {
     [Required]
     public required string LastName {get; set; }
     [Required]
-    [StringLength(30)]
+    [StringLength(100)]
     public required string Degree {get; set; }
     [Required]
     public required int Age {get; set; }
