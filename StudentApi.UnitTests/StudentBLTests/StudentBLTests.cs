@@ -17,9 +17,9 @@ namespace StudentsApi.UnitTests.StudentBLTests
         {
             // Arrange
             _providerMock = new Mock<ISqlLiteProvider>();
-            _connectionLite = new SqliteConnection("Data Source=:memory:");
-            _providerMock.Setup(provider => provider.GetConnection()).Returns(_connectionLite);
+            _connectionLite = new SqliteConnection("Data Source=StudentsLite.db");
             DeleteTableStudents();
+            _providerMock.Setup(provider => provider.GetConnection()).Returns(_connectionLite);
             _studentBL = new StudentBL(_providerMock.Object);
         }
 
@@ -110,7 +110,7 @@ namespace StudentsApi.UnitTests.StudentBLTests
         internal void DeleteTableStudents()
         {
             using SqliteCommand command = _connectionLite.CreateCommand();
-            command.CommandText = "Drop Table Students;";
+            command.CommandText = "DROP TABLE IF EXISTS Students;";
             _connectionLite.Open();
             command.ExecuteNonQuery();
             _connectionLite.Close();
